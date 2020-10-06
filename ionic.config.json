@@ -1,0 +1,7 @@
+{
+  "name": "NightSchool",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "react"
+}
