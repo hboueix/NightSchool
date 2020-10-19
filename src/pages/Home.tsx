@@ -1,24 +1,38 @@
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react';
+import { IonButton, IonCard, IonCol, IonContent, IonFooter, IonGrid, IonHeader, IonIcon, IonImg, IonItem, IonPage, IonRow, IonTitle, IonToolbar } from '@ionic/react';
 import React from 'react';
-import ExploreContainer from '../components/ExploreContainer';
-import './Home.css';
 
 const Home: React.FC = () => {
   return (
     <IonPage>
-      <IonHeader>
-        <IonToolbar>
-          <IonTitle>Blank</IonTitle>
-        </IonToolbar>
-      </IonHeader>
-      <IonContent fullscreen>
-        <IonHeader collapse="condense">
-          <IonToolbar>
-            <IonTitle size="large">Blank</IonTitle>
-          </IonToolbar>
-        </IonHeader>
-        <ExploreContainer />
+      <IonContent className="ion-padding">
+        <IonGrid>
+          
+          <IonRow>
+            <IonCol>
+              <IonImg className="ion-margin-top" id="logo" src='assets/img/nightschool.png' alt="Logo NightSchool" />
+            </IonCol>
+          </IonRow>
+
+        </IonGrid>
       </IonContent>
+      <IonFooter className="ion-margin-bottom">
+        <IonGrid>
+          <IonRow className="ion-text-center">
+              <IonCol>
+                <IonButton routerLink="/game-options" fill='outline'>
+                  Jouer
+                </IonButton>
+              </IonCol>
+          </IonRow>
+          <IonRow className="ion-text-center">
+              <IonCol>
+                <IonButton routerLink="/settings" fill='outline'>
+                  Paramètres
+                </IonButton>
+              </IonCol>
+          </IonRow>
+        </IonGrid>
+      </IonFooter>
     </IonPage>
   );
 };
