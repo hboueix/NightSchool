@@ -1,5 +1,8 @@
-import { IonButton, IonCard, IonCol, IonContent, IonFooter, IonGrid, IonHeader, IonIcon, IonImg, IonItem, IonPage, IonRow, IonTitle, IonToolbar } from '@ionic/react';
+import { IonButton, IonCol, IonContent, IonFooter, IonGrid, IonImg, IonPage, IonRow } from '@ionic/react';
 import React from 'react';
+import ResponsiveContent from '../components/ResponsiveContent';
+
+import './Home.css'
 
 const Home: React.FC = () => {
   return (
@@ -8,9 +11,9 @@ const Home: React.FC = () => {
         <IonGrid>
           
           <IonRow>
-            <IonCol>
-              <IonImg className="ion-margin-top" id="logo" src='assets/img/nightschool.png' alt="Logo NightSchool" />
-            </IonCol>
+            <ResponsiveContent>
+              <IonImg className="ion-margin" id="logo" src='assets/img/nightschool.png' alt="Logo NightSchool" />
+            </ResponsiveContent>
           </IonRow>
 
         </IonGrid>

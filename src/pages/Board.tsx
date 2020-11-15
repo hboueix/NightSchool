@@ -1,7 +1,12 @@
-import { IonBackButton, IonButton, IonButtons, IonCol, IonContent, IonFab, IonFabButton, IonGrid, IonHeader, IonIcon, IonModal, IonPage, IonRow, IonTitle, IonToolbar } from '@ionic/react';
+import { IonButton, IonButtons, IonCard, IonCardContent, IonCol, IonContent, IonGrid, IonHeader, IonIcon, IonItem, IonLabel, IonModal, IonPage, IonRow, IonTitle, IonToolbar } from '@ionic/react';
 import React, { useState } from 'react';
 
 import { settings, closeOutline } from 'ionicons/icons';
+import ResponsiveContent from '../components/ResponsiveContent';
+import Deck from '../components/Deck';
+import Discards from '../components/Discards';
+
+import './Board.css'
 
 const Board: React.FC = () => {
 
@@ -9,11 +14,6 @@ const Board: React.FC = () => {
 
 	return (
 		<IonPage>
-			{/* <IonFab vertical="top" horizontal="end" slot="fixed">
-        <IonFabButton color='light' onClick={() => setShowModal(true)}>
-          <IonIcon icon={settings} />
-        </IonFabButton>
-      </IonFab> */}
       <IonHeader>
         <IonToolbar>
           <IonTitle>Night School</IonTitle>
@@ -24,6 +24,44 @@ const Board: React.FC = () => {
           </IonButtons>
         </IonToolbar>
       </IonHeader>
+      <IonContent>
+        <IonGrid>
+          <IonRow>
+            <ResponsiveContent>
+              <IonItem id='item-player' className='ion-text-center'>
+                <IonLabel id='player-name'>
+                  Nom du joueur
+                </IonLabel>
+              </IonItem>
+            </ResponsiveContent>
+          </IonRow>
+          <IonRow>
+            <Deck rotation='135' position='tl' />
+            <Deck rotation='0' position='t' />
+            <Deck rotation='45' position='tr' />
+          </IonRow>
+          <IonRow>
+            <Deck rotation='90' position='l' />
+            <Discards />
+            <Deck rotation='90' position='r' />
+          </IonRow>
+          <IonRow>
+            <Deck rotation='45' position='bl' />
+            <Deck rotation='0' position='b' />
+            <Deck rotation='135' position='br' />
+          </IonRow>
+          <IonRow>
+            <ResponsiveContent>
+              <IonItem>
+                <IonLabel>Dans la défausse :</IonLabel>
+              </IonItem>
+              <IonItem>
+                <IonLabel>Reste à jouer :</IonLabel>
+              </IonItem>
+            </ResponsiveContent>
+          </IonRow>
+        </IonGrid>
+      </IonContent>
 
       <IonModal isOpen={showModal}>
         <IonHeader>
