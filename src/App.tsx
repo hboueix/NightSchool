@@ -4,13 +4,14 @@ import { IonApp, IonRouterOutlet } from '@ionic/react';
 import { IonReactRouter } from '@ionic/react-router';
 
 /* Routes */
-import { ROUTE_BOARD, ROUTE_HOME, ROUTE_OPTIONS, ROUTE_SETTINGS } from './nav/Routes';
+import { ROUTE_BOARD, ROUTE_HOME, ROUTE_OPTIONS, ROUTE_SETTINGS, ROUTE_PHOTO } from './nav/Routes';
 
 /* Pages */
 import Home from './pages/Home';
 import Options from './pages/Options';
 import Settings from './pages/Settings';
 import Board from './pages/Board';
+import Photo from './pages/Photo';
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -39,6 +40,7 @@ const App: React.FC = () => (
         <Route path={ROUTE_OPTIONS} component={Options} exact />
         <Route path={ROUTE_SETTINGS} component={Settings} exact />
         <Route path={ROUTE_BOARD} component={Board} exact />
+        <Route path={ROUTE_PHOTO} component={Photo} exact />
         <Route exact path="/" render={() => <Redirect to="/home" />} />
       </IonRouterOutlet>
     </IonReactRouter>
