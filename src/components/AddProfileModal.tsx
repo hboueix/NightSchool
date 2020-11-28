@@ -15,6 +15,7 @@ import {
     IonToolbar
 } from '@ionic/react';
 import React, { useContext, useRef } from 'react';
+// import uuid from 'react-uuid'
 import AppContext, { Profile } from '../data/app-context';
 // import AddPictureNewProfile, { Picture } from './AddPictureNewProfile';
 
