@@ -2,12 +2,13 @@ import { IonButton, IonCol, IonContent, IonFooter, IonGrid, IonImg, IonPage, Ion
 import React from 'react';
 import ResponsiveContent from '../components/ResponsiveContent';
 
+import './global.css'
 import './Home.css'
 
 const Home: React.FC = () => {
   return (
     <IonPage>
-      <IonContent className="ion-padding">
+      <IonContent className="ion-padding no-scroll">
         <IonGrid>
           
           <IonRow>

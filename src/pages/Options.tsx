@@ -1,6 +1,8 @@
 import { IonBackButton, IonButton, IonButtons, IonContent, IonFooter, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react';
 import React from 'react';
 
+import './global.css'
+
 const Options: React.FC = () => {
 	return (
 	  <IonPage>
@@ -12,7 +14,7 @@ const Options: React.FC = () => {
 			<IonTitle>Options de la partie</IonTitle>
 		  </IonToolbar>
 		</IonHeader>
-		<IonContent>
+		<IonContent className='no-scroll'>
 		</IonContent>
 		<IonFooter className="ion-text-center">
 		  <IonButton routerLink="/board" fill='outline'>
