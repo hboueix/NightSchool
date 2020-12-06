@@ -43,6 +43,7 @@ const AddProfileModal: React.FC<{ showModal: boolean, setShowModal: (value: bool
         }
         appCtx.addProfile(newProfile)
         props.setShowModal(false)
+        setPicture("assets/img/default-profile.png")
     }
 
     const takePhoto = async () => {
