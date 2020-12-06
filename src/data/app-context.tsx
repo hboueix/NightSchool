@@ -13,7 +13,7 @@ export interface Profile {
 }
 
 export const defaultProfile: Profile = {
-    id: 0,
+    id: 1,
     username: "Joueur 1",
     picture: "assets/img/default-profile.png"
 }

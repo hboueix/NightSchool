@@ -1,7 +1,9 @@
 import { IonBackButton, IonButton, IonButtons, IonCard, IonCardHeader, IonCardTitle, IonContent, IonFab, IonFabButton, IonFooter, IonGrid, IonHeader, IonIcon, IonItem, IonLabel, IonList, IonPage, IonRow, IonTitle, IonToolbar } from '@ionic/react';
-import { addOutline } from 'ionicons/icons';
+import { addOutline,close } from 'ionicons/icons';
 import React, { useContext, useState } from 'react';
+import { parseConfigFileTextToJson } from 'typescript';
 import AddProfileModal from '../components/AddProfileModal';
+import EditProfileModal from '../components/EditProfileModal';
 import ResponsiveContent from '../components/ResponsiveContent';
 import AppContext from '../data/app-context';
 import { ROUTE_BOARD } from '../nav/Routes';
@@ -12,6 +14,14 @@ const Options: React.FC = () => {
 	// const [checked, setChecked] = useState(false);
 	// const [showAlert, setShowAlert] = useState(false);
 	const [showModal, setShowModal] = useState(false);
+	const [editModal, setEditModal] = useState(false); 
+	const [idProfileToEdit, setIdProfileToEdit] = useState<number>(1);
+
+	const clickOnProfile = (elem: { id: number; username: string; picture: string; }) => {
+		console.log('elem', elem);
+		setIdProfileToEdit(elem.id);
+		setEditModal(true);
+	}
 
 
 	const appCtx = useContext(AppContext)
@@ -19,6 +29,7 @@ const Options: React.FC = () => {
 	return (
 	  <IonPage>
     	<AddProfileModal showModal={showModal} setShowModal={setShowModal} />
+    	<EditProfileModal showModal={editModal} id={idProfileToEdit} setShowModal={setEditModal} />
       <IonHeader>
         <IonToolbar>
         <IonButtons slot="start">
@@ -34,7 +45,7 @@ const Options: React.FC = () => {
               <IonCard>
                 <IonCardHeader>
                   <IonCardTitle>
-                    Nombre de joueurs (2 à 8):
+                    Nombre de joueurs :
                     <IonLabel onClick={() => console.log('nb joueur')} className='ion-float-right'>
                       {appCtx.profiles.length}
                     </IonLabel>
@@ -68,9 +79,15 @@ const Options: React.FC = () => {
                     {appCtx.profiles.map(
                       (elem: { id: number; username: string; picture: string; }) => (
                         <IonItem key={elem.id}>
-                          <img id="profile-picture" src={elem.picture} alt='Profil' />
-                          {/* <IonLabel>{elem.id}</IonLabel> */}
-                          <IonLabel className='ion-float-right'>{elem.username}</IonLabel>
+                            <img id="profile-picture" src={elem.picture} alt='Profil' />
+                            {/* <IonLabel>{elem.id}</IonLabel> */}
+                            <IonLabel className='ion-float-right' onClick={() => clickOnProfile(elem)}>{elem.username}</IonLabel>
+                            {appCtx.profiles.length !== 1 && 
+                            <IonButtons slot="end">
+                              <IonButton onClick={() => appCtx.deleteProfile(elem.id)}>
+                                <IonIcon icon={close} />
+                              </IonButton>
+                            </IonButtons>}
                         </IonItem>
                         )
                       )

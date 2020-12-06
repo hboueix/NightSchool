@@ -25,7 +25,6 @@ const AppContextProvider: React.FC = (props) => {
 	// 	appCtx.updateProfile(updatedProfile);
 	// }
 	const addProfile = (newprofile: Profile) => {
-        console.log('2ieme essaie')
         setProfiles((prevState) => {
             let newList = [...prevState];
             newList.push(newprofile)
@@ -35,9 +34,14 @@ const AppContextProvider: React.FC = (props) => {
 
     const deleteProfile = (id: number) => {
         const index = profiles.map(el => el.id).indexOf(id)
+        console.log(index);
         setProfiles((prevState) => {
             let newList = [...prevState];
-            newList.splice(index, 1)
+            console.log(newList);
+            newList.splice(index, 1);
+            for (let i = index; i < newList.length; i++) {
+                newList[i].id--
+              }
             return newList
         })
     }
