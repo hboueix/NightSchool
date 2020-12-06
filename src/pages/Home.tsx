@@ -1,20 +1,26 @@
-import { IonButton, IonCard, IonCol, IonContent, IonFooter, IonGrid, IonHeader, IonIcon, IonImg, IonItem, IonPage, IonRow, IonTitle, IonToolbar } from '@ionic/react';
-import React from 'react';
+import { IonAlert, IonButton, IonCol, IonContent, IonFooter, IonGrid, IonImg, IonPage, IonRow } from '@ionic/react';
+import React, { useState } from 'react';
+import ResponsiveContent from '../components/ResponsiveContent';
+
+import './global.css'
+import './Home.css'
 
 const Home: React.FC = () => {
+
+  const [showAlert, setShowAlert] = useState(true);
+
   return (
     <IonPage>
-      <IonContent className="ion-padding">
+      <IonContent className="ion-padding no-scroll">
         <IonGrid>
-          
           <IonRow>
-            <IonCol>
-              <IonImg className="ion-margin-top" id="logo" src='assets/img/nightschool.png' alt="Logo NightSchool" />
-            </IonCol>
+            <ResponsiveContent>
+              <IonImg className="ion-margin" id="logo" src='assets/img/nightschool.png' alt="Logo NightSchool" />
+            </ResponsiveContent>
           </IonRow>
-
         </IonGrid>
       </IonContent>
+
       <IonFooter className="ion-margin-bottom">
         <IonGrid>
           <IonRow className="ion-text-center">
@@ -33,6 +39,16 @@ const Home: React.FC = () => {
           </IonRow>
         </IonGrid>
       </IonFooter>
+
+      <IonAlert
+        isOpen={showAlert}
+        onDidDismiss={() => setShowAlert(false)}
+        cssClass='my-custom-class'
+        header={'Attention'}
+        message={"L'abus d'alcool est dangereux pour la santé. En poursuivant vous confirmez être responsable des éventuelles conséquences que pourrait engendrer l'utilisation de NightSchool."}
+        buttons={['OK']}
+      />	
+
     </IonPage>
   );
 };

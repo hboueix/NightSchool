@@ -5,6 +5,8 @@ import AddProfileModal from '../components/AddProfileModal';
 import ResponsiveContent from '../components/ResponsiveContent';
 import AppContext from '../data/app-context';
 
+import './global.css'
+
 const Options: React.FC = () => {
 	const [checked, setChecked] = useState(false);
 	const [showAlert, setShowAlert] = useState(false);

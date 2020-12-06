@@ -1,0 +1,48 @@
+.deck {
+	width: 50%;
+	margin: auto;
+}
+
+.deg0 {
+	transform: rotate(0deg);
+}
+
+.deg45 {
+	transform: rotate(35deg);
+}
+
+.deg90 {
+	transform: rotate(90deg);
+}
+
+.deg135 {
+	transform: rotate(145deg);
+}
+
+#t {
+	margin-bottom: 10%;
+}
+
+#tl {
+	margin-right: -10%;
+	margin-top: 20%;
+}
+
+#tr {
+	margin-left: -10%;
+	margin-top: 20%;
+}
+
+#b {
+	margin-top: 20%;
+}
+
+#bl {
+	margin-right: -10%;
+	margin-bottom: 20%;
+}
+
+#br {
+	margin-left: -10%;
+	margin-bottom: 20%;
+}
