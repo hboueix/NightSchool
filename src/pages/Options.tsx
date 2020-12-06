@@ -35,7 +35,7 @@ const Options: React.FC = () => {
         <IonButtons slot="start">
           <IonBackButton />
         </IonButtons>
-        <IonTitle>Options de la partie</IonTitle>
+        <IonTitle><b>Options de la partie</b></IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent>

@@ -2,8 +2,10 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
+import { defineCustomElements } from '@ionic/pwa-elements/loader';
 import AppContextProvider from './data/AppContextProvider';
 import GameContextProvider from './data/GameContextProvider';
+import { defineCustomElements } from '@ionic/pwa-elements/loader';
 
 ReactDOM.render(
 	<AppContextProvider>
@@ -17,3 +19,6 @@ ReactDOM.render(
 // unregister() to register() below. Note this comes with some pitfalls.
 // Learn more about service workers: https://bit.ly/CRA-PWA
 serviceWorker.unregister();
+
+// Call the element loader after the app has been rendered the first time
+defineCustomElements(window);
