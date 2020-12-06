@@ -9,6 +9,7 @@ import './global.css'
 import './Board.css'
 
 import GameContext from '../data/game-context';
+import { ROUTE_HOME, ROUTE_OPTIONS } from '../nav/Routes';
 
 const Deck = require('card-deck');
 
@@ -84,10 +85,12 @@ const Board: React.FC = () => {
           <IonRow>
             <IonDeck rotation='90' position='l' onClick={drawCard} />
             <IonCol>
+              {srcDiscardImg !== '' &&
               <IonImg id='discard-deck' class='deck' 
                 onClick={() => console.log('click on discard deck')} 
                 src={srcDiscardImg}
                 />
+              }
             </IonCol>
             <IonDeck rotation='90' position='r' onClick={drawCard} />
           </IonRow>
@@ -121,7 +124,7 @@ const Board: React.FC = () => {
           <IonGrid className="ion-text-center">
             <IonRow>
               <ResponsiveContent>
-                <IonImg src={srcCardImg} />
+                <img src={srcCardImg} alt='Card front' />
               </ResponsiveContent>
             </IonRow>
             <IonRow>
@@ -129,6 +132,7 @@ const Board: React.FC = () => {
                 <IonCard>
                   <IonCardHeader>
                     <IonCardTitle>Effet de la carte :</IonCardTitle>
+                    <IonCardContent>{gameCtx.game.cardPulled.rule}</IonCardContent>
                   </IonCardHeader>
                 </IonCard>
               </IonCol>
@@ -169,7 +173,12 @@ const Board: React.FC = () => {
             </IonRow>
             <IonRow>
               <IonCol>
-                <IonButton routerLink="/home" onClick={() => setShowModal(false)} fill="outline">Quitter la partie</IonButton>
+                <IonButton routerLink={ROUTE_OPTIONS} onClick={() => setShowModal(false)} fill="outline">Recommencer</IonButton>
+              </IonCol>
+            </IonRow>
+            <IonRow>
+              <IonCol>
+                <IonButton routerLink={ROUTE_HOME} onClick={() => setShowModal(false)} fill="outline">Quitter la partie</IonButton>
               </IonCol>
             </IonRow>
           </IonGrid>
