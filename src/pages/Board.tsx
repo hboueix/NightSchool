@@ -9,9 +9,10 @@ import CardModal from '../components/CardModal';
 import './global.css'
 import './Board.css'
 
-import GameContext from '../data/game-context';
+import GameContext, { Card, Game } from '../data/game-context';
 import AppContext from '../data/app-context';
 import PauseModal from '../components/PauseModal';
+import DiscardGameModal from '../components/DiscardGameModal';
 
 const Deck = require('card-deck');
 
@@ -21,7 +22,10 @@ const Board: React.FC = () => {
   const [srcCardImg, setSrcCardImg] = useState('');
   const [showCard, setShowCard] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
+  const [showEndWin, setShowEndWin] = useState(false);
+  const [showEndLoose, setShowEndLoose] = useState(false);
   const [pauseModal, setPauseModal] = useState(false);
+  const [discardGame, setDiscardGame] = useState(false);
   const gameCtx = useContext(GameContext);
   const appCtx = useContext(AppContext);
 
@@ -49,27 +53,43 @@ const Board: React.FC = () => {
         let updatedGame = gameCtx.game;
         updatedGame.decks[idDeck] = deck;
         updatedGame.cardPulled = card;
-        updatedGame.pullHistory.push(card);
+        updatedGame.pullHistory.push({'id': gameCtx.game.currentPlayer.id,'card': card});
         gameCtx.updateGame(updatedGame);
 			}
-	
-			console.log(card);
 		}
+  }
+
+  const addCardOnDiscard = (card: Card, updatedGame: Game) => {
+    setSrcDiscardImg(card.front);
+    updatedGame.discards.push(card);
+    gameCtx.updateGame(updatedGame);
+    endTurn();
+  }
+
+  const endTurn = () => {
+    let updatedGame = gameCtx.game;
+    let nextPlayer = getNextPlayer();
+    updatedGame.currentPlayer = nextPlayer;
+    gameCtx.updateGame(updatedGame);
+    console.log('discards: ', gameCtx.game.discards)
+    if (gameCtx.game.discards.length === 0) {
+      setSrcDiscardImg("");
+      setShowEndLoose(true);
+    } else if (gameCtx.game.discards.length > 1) {
+      setShowEndWin(true);
+    }
   }
   
   const dismissCardModal = () => {
     let updatedGame = gameCtx.game;
-    let card = updatedGame.pullHistory[updatedGame.pullHistory.length - 1];
-
-    setSrcDiscardImg(card.front);
-    updatedGame.discards.push(card);
-
-    let nextPlayer = getNextPlayer();
-    updatedGame.currentPlayer = nextPlayer;
-
-    gameCtx.updateGame(updatedGame);
-
+    let card = updatedGame.pullHistory[updatedGame.pullHistory.length - 1].card;
     setShowCard(false);
+
+    if (updatedGame.pullHistory.length !== 1) {
+      setDiscardGame(true);
+    } else {
+      addCardOnDiscard(card, updatedGame);
+    }
   }
 
 	return (
@@ -135,6 +155,8 @@ const Board: React.FC = () => {
 
       <CardModal showModal={showCard} dismissCardModal={dismissCardModal} srcCardImg={srcCardImg} />
 
+      <DiscardGameModal showModal={discardGame} setShowModal={setDiscardGame} addCardOnDiscard={addCardOnDiscard} endTurn={endTurn} />
+
       <PauseModal showModal={pauseModal} setShowModal={setPauseModal} />
 
       <IonAlert
@@ -143,6 +165,24 @@ const Board: React.FC = () => {
         cssClass='my-custom-class'
         header={'Deck vide'}
         message={"Il n'y a plus de carte dans ce paquet !"}
+        buttons={['OK']}
+      />
+
+      <IonAlert
+        isOpen={showEndWin}
+        onDidDismiss={() => setShowEndWin(false)}
+        cssClass='my-custom-class'
+        header={"Bien joué !"}
+        message={"Tu as réussi. C'est maintenant au tour de " + gameCtx.game.currentPlayer.username}
+        buttons={['OK']}
+      />
+
+      <IonAlert
+        isOpen={showEndLoose}
+        onDidDismiss={() => setShowEndLoose(false)}
+        cssClass='my-custom-class'
+        header={'Raté...'}
+        message={"Tu t'es trompé. C'est parti pour le cul sec !\nPuis ce sera à " + gameCtx.game.currentPlayer.username + " de jouer."}
         buttons={['OK']}
       />
 		</IonPage>

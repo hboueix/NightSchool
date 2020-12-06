@@ -18,6 +18,7 @@ interface AppContext {
     addProfile: (newProfile: Profile) => void,
     deleteProfile: (id: number) => void
     updateProfile: (updatedProfile: Profile) => void,
+    agreeDrinkWarning: boolean
 }
 
 const AppContext = React.createContext<AppContext>({
@@ -26,6 +27,7 @@ const AppContext = React.createContext<AppContext>({
     addProfile: () => { },
     deleteProfile: () => { },
     updateProfile: () => { },
+    agreeDrinkWarning: false
 });
 
 export default AppContext
