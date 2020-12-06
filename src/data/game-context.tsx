@@ -1,4 +1,5 @@
 import React from 'react';
+import { defaultProfile, Profile } from './app-context';
 
 const Deck = require('card-deck');
 
@@ -80,6 +81,7 @@ export interface Game {
 	discards: Card[]
 	cardPulled: Card
 	pullHistory: Card[]
+	currentPlayer: Profile
 }
 
 export const defaultGame: Game = {
@@ -88,6 +90,7 @@ export const defaultGame: Game = {
 	discards: [],
 	cardPulled: new Card('1J'),
 	pullHistory: [],
+	currentPlayer: defaultProfile
 }
 
 interface GameContext {
