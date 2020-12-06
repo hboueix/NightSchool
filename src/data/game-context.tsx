@@ -10,22 +10,41 @@ function shuffle(a: Object[]) {
     return a;
 }
 
+const defaultRules: {[id: string] : string} = {
+	'2': 'Tu peux distribuer 2 gorgées.',
+	'3': 'Tu peux distribuer 3 gorgées.',
+	'4': 'Tu peux distribuer 4 gorgées.',
+	'5': 'Tu peux distribuer 5 gorgées.',
+	'6': 'Tu peux distribuer 6 gorgées.',
+	'7': '"Dans ma valise"',
+	'8': '"J\'ai déjà / Je n\'ai jamais"',
+	'9': '"La lettre"',
+	'T': '"Jeu des thèmes"',
+	'J': 'Tu es maintenant le Roi des pouces',
+	'Q': '"Gorgée du peuple"',
+	'K': 'Tu peux inventer une règle',
+	'A': 'Eeeeh... c\'est le cul sec !'
+}
+
 export interface Card {
 	value: string;
 	front: string;
 	back: string;
+	rule: string;
 }
 
 export class Card implements Card {
 	value: string;
 	front: string;
 	back: string;
+	rule: string;
 
 	constructor(value: string, back: string = '2B') {
 		let baseRoute = 'assets/img/cards/';
 		this.value = value;
 		this.front = `${baseRoute}${this.value}.svg`;
 		this.back = `${baseRoute}${back}.svg`;
+		this.rule = defaultRules[this.value[0]]
 	}
 }
 
@@ -68,7 +87,7 @@ export const defaultGame: Game = {
 	decks: pullableDecks,
 	discards: [],
 	cardPulled: new Card('1J'),
-	pullHistory: []
+	pullHistory: [],
 }
 
 interface GameContext {
