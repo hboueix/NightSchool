@@ -33,7 +33,7 @@ const AppContextProvider: React.FC = (props) => {
         })
     }
 
-    const deleteProfile = (id: string) => {
+    const deleteProfile = (id: number) => {
         const index = profiles.map(el => el.id).indexOf(id)
         setProfiles((prevState) => {
             let newList = [...prevState];

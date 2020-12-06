@@ -66,9 +66,9 @@ const Options: React.FC = () => {
                       {/* <IonIcon className='' onClick={() => setShowModal(true)} icon={addOutline} /> */}
                     </IonCardTitle>
                     {appCtx.profiles.map(
-                      (elem: { id: string; username: string; picture: string; }) => (
+                      (elem: { id: number; username: string; picture: string; }) => (
                         <IonItem key={elem.id}>
-                          <img id="profile-picture" src={elem.picture} />
+                          <img id="profile-picture" src={elem.picture} alt='Profil' />
                           {/* <IonLabel>{elem.id}</IonLabel> */}
                           <IonLabel className='ion-float-right'>{elem.username}</IonLabel>
                         </IonItem>

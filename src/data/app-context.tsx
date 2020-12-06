@@ -7,14 +7,14 @@ import React from 'react';
 //     listeProfile: Array<Profile>,
 // }
 export interface Profile {
-    id: string,
+    id: number,
     username: string,
     picture: string
 }
 
 export const defaultProfile: Profile = {
-    id: '0',
-    username: "Dupond",
+    id: 0,
+    username: "Joueur 1",
     picture: "assets/img/default-profile.png"
 }
 
@@ -29,7 +29,7 @@ interface AppContext {
     initContext: () => void,
     profiles: Profile[],
     addProfile: (newProfile: Profile) => void,
-    deleteProfile: (id: string) => void
+    deleteProfile: (id: number) => void
     updateProfile: (updatedProfile: Profile) => void,
     // gameoptions: GameOptions,
     // updateGameOptions: (updatedGameOptions: GameOptions) => void

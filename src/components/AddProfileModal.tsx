@@ -43,10 +43,10 @@ const AddProfileModal: React.FC<{ showModal: boolean, setShowModal: (value: bool
         //         directory: FilesystemDirectory.Data
         //     })
         // }
-
+        let nextId = appCtx.profiles.length + 1
         let newProfile: Profile = {
-            id : "test",
-            username: usernameRef.current?.value ? usernameRef.current?.value?.toString() : "username",
+            id : nextId,
+            username: usernameRef.current?.value ? usernameRef.current?.value?.toString() : "Joueur" + nextId,
             picture : "assets/img/default-profile.png"
             // picture: picture?.filename ? [picture?.filename]
         }
@@ -73,7 +73,7 @@ const AddProfileModal: React.FC<{ showModal: boolean, setShowModal: (value: bool
                                 {/* <AddPictureNewProfile updatePicture={updatePicture} /> */}
                                 <IonItem>
                                     <IonLabel position="floating">Nom du joueur</IonLabel>
-                                    <IonInput ref={usernameRef} value="new username"></IonInput>
+                                    <IonInput ref={usernameRef} value={"Joueur " + (appCtx.profiles.length + 1)}></IonInput>
                                 </IonItem>
                             </IonList>
                         </ResponsiveContent>
