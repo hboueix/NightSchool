@@ -1,23 +1,23 @@
 import React, { useState, useEffect, useRef } from 'react';
-import AppContext, { Profile, defaultProfile, defaultGameOptions, GameOptions } from './app-context';
+import AppContext, { Profile, defaultProfile } from './app-context';
 
 import { Plugins } from '@capacitor/core'
 
 const { Storage } = Plugins;
 
 const AppContextProvider: React.FC = (props) => {
-    const [profiles, setProfiles] = useState<Profile[]>([])
-    const [gameoptions, setGameOptions] = useState<GameOptions>(defaultGameOptions)
+    const [profiles, setProfiles] = useState<Profile[]>([defaultProfile])
+    // const [gameoptions, setGameOptions] = useState<GameOptions>(defaultGameOptions)
     const didMountRef = useRef(false);
 
     useEffect(() => {
         if (didMountRef.current) {
             Storage.set({ key: 'profiles', value: JSON.stringify(profiles) })
-            Storage.set({ key : 'gameoptions', value: JSON.stringify(gameoptions)})
+            // Storage.set({ key : 'gameoptions', value: JSON.stringify(gameoptions)})
         } else {
             didMountRef.current = true;
         }
-    }, [profiles, gameoptions])
+    }, [profiles])
 
     // const updateUsername = (newUsername: string) => {
 	// 	let updatedProfile = { ...appCtx.profile }
@@ -51,21 +51,21 @@ const AppContextProvider: React.FC = (props) => {
         })
     }
 
-    const updateGameOptions = (updatedGameOptions: GameOptions) => {
-        setGameOptions(updatedGameOptions)
-    }
+    // const updateGameOptions = (updatedGameOptions: GameOptions) => {
+    //     setGameOptions(updatedGameOptions)
+    // }
 
     const initContext = async () => {
         const profilesData = await Storage.get({ key: 'profiles' })
-        const gameoptionsData = await Storage.get({ key: 'gameoptions' })
+        // const gameoptionsData = await Storage.get({ key: 'gameoptions' })
         const storedProfiles = profilesData.value ? JSON.parse(profilesData.value) : defaultProfile;
-        const storedGameOptions = gameoptionsData.value ? JSON.parse(gameoptionsData.value) : defaultGameOptions;
+        // const storedGameOptions = gameoptionsData.value ? JSON.parse(gameoptionsData.value) : defaultGameOptions;
         didMountRef.current = false;
-        setGameOptions(storedGameOptions)
+        // setGameOptions(storedGameOptions)
         setProfiles(storedProfiles)
     }
 
-    return <AppContext.Provider value={{ initContext, profiles, gameoptions, addProfile, deleteProfile, updateProfile, updateGameOptions}}>
+    return <AppContext.Provider value={{ initContext, profiles, addProfile, deleteProfile, updateProfile}}>
         {props.children}
     </AppContext.Provider>
 }

@@ -9,6 +9,7 @@ import './global.css'
 import './Board.css'
 
 import GameContext from '../data/game-context';
+import AppContext from '../data/app-context';
 import { ROUTE_HOME, ROUTE_OPTIONS } from '../nav/Routes';
 
 const Deck = require('card-deck');
@@ -21,6 +22,7 @@ const Board: React.FC = () => {
   const [showAlert, setShowAlert] = useState(false);
   const [showModal, setShowModal] = useState(false);
   const gameCtx = useContext(GameContext);
+  const appCtx = useContext(AppContext);
 
   let totalRemaining = gameCtx.getTotalRemaining();
   let totalDiscards = gameCtx.game.discards.length;
@@ -72,7 +74,7 @@ const Board: React.FC = () => {
             <ResponsiveContent>
               <IonCard>
                 <IonCardHeader>
-                  <IonCardTitle>Nom du joueur</IonCardTitle>
+                  <IonCardTitle>{appCtx.profiles[0].username ?? "Nom du joueur"}</IonCardTitle>
                 </IonCardHeader>
               </IonCard>
             </ResponsiveContent>

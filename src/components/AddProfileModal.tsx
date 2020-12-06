@@ -1,4 +1,4 @@
-import { Plugins } from '@capacitor/core';
+// import { Plugins } from '@capacitor/core';
 import {
     IonButton,
     IonCol,
@@ -17,12 +17,13 @@ import {
 import React, { useContext, useRef } from 'react';
 // import uuid from 'react-uuid'
 import AppContext, { Profile } from '../data/app-context';
+import ResponsiveContent from './ResponsiveContent';
 // import AddPictureNewProfile, { Picture } from './AddPictureNewProfile';
 
-const { Filesystem } = Plugins;
+// const { Filesystem } = Plugins;
 
 const AddProfileModal: React.FC<{ showModal: boolean, setShowModal: (value: boolean) => void }> = (props) => {
-    const idRef = useRef<HTMLIonInputElement>(null);
+    // const idRef = useRef<HTMLIonInputElement>(null);
     const usernameRef = useRef<HTMLIonInputElement>(null);
     const appCtx = useContext(AppContext);
     // const [picture, setPicture] = useState<Picture>();    
@@ -46,7 +47,7 @@ const AddProfileModal: React.FC<{ showModal: boolean, setShowModal: (value: bool
         let newProfile: Profile = {
             id : "test",
             username: usernameRef.current?.value ? usernameRef.current?.value?.toString() : "username",
-            picture : null
+            picture : "assets/img/default-profile.png"
             // picture: picture?.filename ? [picture?.filename]
         }
         appCtx.addProfile(newProfile)
@@ -61,29 +62,28 @@ const AddProfileModal: React.FC<{ showModal: boolean, setShowModal: (value: bool
         <IonModal isOpen={props.showModal} onDidPresent={resetModal}>
             <IonHeader>
                 <IonToolbar>
-                    <IonTitle>Add new profile</IonTitle>
+                    <IonTitle>Nouveau joueur</IonTitle>
                 </IonToolbar>
             </IonHeader>
             <IonContent>
                 <IonGrid>
                     <IonRow>
-                        <IonCol></IonCol>
+                        <ResponsiveContent>
+                            <IonList className="ion-padding-bottom">
+                                {/* <AddPictureNewProfile updatePicture={updatePicture} /> */}
+                                <IonItem>
+                                    <IonLabel position="floating">Nom du joueur</IonLabel>
+                                    <IonInput ref={usernameRef} value="new username"></IonInput>
+                                </IonItem>
+                            </IonList>
+                        </ResponsiveContent>
                     </IonRow>
-                </IonGrid>
-                <IonList className="ion-padding-bottom" mode="ios">
-                    <IonItem>
-                        <IonLabel position="floating">Pseudonyme</IonLabel>
-                        <IonInput ref={usernameRef} value="new username"></IonInput>
-                    </IonItem>
-                    {/* <AddPictureNewProfile updatePicture={updatePicture} /> */}
-                </IonList>
-                <IonGrid>
                     <IonRow className="ion-justify-content-between">
                         <IonCol size="auto" >
-                            <IonButton fill="outline" onClick={() => props.setShowModal(false)}>Cancel</IonButton>
+                            <IonButton fill="outline" onClick={() => props.setShowModal(false)}>Annuler</IonButton>
                         </IonCol>
                         <IonCol size="auto" >
-                            <IonButton onClick={addHandler}>Save</IonButton>
+                            <IonButton onClick={addHandler}>Confirmer</IonButton>
                         </IonCol>
                     </IonRow>
                 </IonGrid>

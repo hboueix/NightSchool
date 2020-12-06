@@ -1,29 +1,29 @@
 import React from 'react';
 
-export interface GameOptions {
-    id: string, 
-    nombreProfile: number,
-    customRules: boolean,
-    listeProfile: Array<Profile>,
-}
+// export interface GameOptions {
+//     id: string, 
+//     nombreProfile: number,
+//     customRules: boolean,
+//     listeProfile: Array<Profile>,
+// }
 export interface Profile {
     id: string,
     username: string,
-    picture: string | null
+    picture: string
 }
 
 export const defaultProfile: Profile = {
     id: '0',
     username: "Dupond",
-    picture: null
+    picture: "assets/img/default-profile.png"
 }
 
-export const defaultGameOptions: GameOptions = {
-    id: '0',
-    nombreProfile: 2,
-    customRules: false,
-    listeProfile: [defaultProfile]
-}
+// export const defaultGameOptions: GameOptions = {
+//     id: '0',
+//     nombreProfile: 2,
+//     customRules: false,
+//     listeProfile: [defaultProfile]
+// }
 
 interface AppContext {
     initContext: () => void,
@@ -31,8 +31,8 @@ interface AppContext {
     addProfile: (newProfile: Profile) => void,
     deleteProfile: (id: string) => void
     updateProfile: (updatedProfile: Profile) => void,
-    gameoptions: GameOptions,
-    updateGameOptions: (updatedGameOptions: GameOptions) => void
+    // gameoptions: GameOptions,
+    // updateGameOptions: (updatedGameOptions: GameOptions) => void
 }
 
 const AppContext = React.createContext<AppContext>({
@@ -41,8 +41,8 @@ const AppContext = React.createContext<AppContext>({
     addProfile: () => { },
     deleteProfile: () => { },
     updateProfile: () => { },
-    gameoptions: defaultGameOptions,
-    updateGameOptions: () => { }
+    // gameoptions: defaultGameOptions,
+    // updateGameOptions: () => { }
 });
 
 export default AppContext
