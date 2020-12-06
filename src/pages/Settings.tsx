@@ -27,6 +27,14 @@ const Settings: React.FC = () => {
 				onIonChange={toggleDarkModeHandler}
 				/>
 			</IonItem>
+			<IonItem>
+				<IonIcon slot="start"  />
+				<IonLabel>langue FR | ANG </IonLabel>
+				<IonToggle
+				slot="end"
+				name="darkMode"
+				/>
+			</IonItem>
 			</IonContent>
 		</IonPage>
 	)
