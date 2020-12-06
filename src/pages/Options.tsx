@@ -24,7 +24,7 @@ const Options: React.FC = () => {
         <IonButtons slot="start">
           <IonBackButton />
         </IonButtons>
-        <IonTitle>Options de la partie</IonTitle>
+        <IonTitle><b>Options de la partie</b></IonTitle>
         </IonToolbar>
       </IonHeader>
       <IonContent>
@@ -68,7 +68,7 @@ const Options: React.FC = () => {
                     {appCtx.profiles.map(
                       (elem: { id: number; username: string; picture: string; }) => (
                         <IonItem key={elem.id}>
-                          <img id="profile-picture" src={elem.picture} alt='Profil' />
+                          <img className="profile-picture" src={elem.picture} alt='Profil' />
                           {/* <IonLabel>{elem.id}</IonLabel> */}
                           <IonLabel className='ion-float-right'>{elem.username}</IonLabel>
                         </IonItem>

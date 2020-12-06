@@ -1,16 +1,17 @@
-import { IonAlert, IonButton, IonButtons, IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonCol, IonContent, IonFooter, IonGrid, IonHeader, IonIcon, IonImg, IonModal, IonPage, IonRow, IonTitle, IonToolbar } from '@ionic/react';
+import { IonAlert, IonButton, IonButtons, IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonCol, IonContent, IonGrid, IonHeader, IonIcon, IonImg, IonPage, IonRow, IonTitle, IonToolbar } from '@ionic/react';
 import React, { useContext, useState } from 'react';
 
-import { settings, closeOutline } from 'ionicons/icons';
+import { settings } from 'ionicons/icons';
 import ResponsiveContent from '../components/ResponsiveContent';
 import IonDeck from '../components/IonDeck';
+import CardModal from '../components/CardModal';
 
 import './global.css'
 import './Board.css'
 
 import GameContext from '../data/game-context';
 import AppContext from '../data/app-context';
-import { ROUTE_HOME, ROUTE_OPTIONS } from '../nav/Routes';
+import PauseModal from '../components/PauseModal';
 
 const Deck = require('card-deck');
 
@@ -20,12 +21,22 @@ const Board: React.FC = () => {
   const [srcCardImg, setSrcCardImg] = useState('');
   const [showCard, setShowCard] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
-  const [showModal, setShowModal] = useState(false);
+  const [pauseModal, setPauseModal] = useState(false);
   const gameCtx = useContext(GameContext);
   const appCtx = useContext(AppContext);
 
   let totalRemaining = gameCtx.getTotalRemaining();
   let totalDiscards = gameCtx.game.discards.length;
+
+  const getNextPlayer = () => {
+    let currentPlayer = gameCtx.game.currentPlayer;
+    let nextId = currentPlayer.id + 1;
+    if (currentPlayer.id === appCtx.profiles.length) {
+      nextId = 1;
+    }
+    currentPlayer = appCtx.profiles[nextId - 1];
+    return currentPlayer;
+  }
 
   const drawCard = (deck: typeof Deck, idDeck: number) => {
 		if (!showCard) {
@@ -47,11 +58,16 @@ const Board: React.FC = () => {
   }
   
   const dismissCardModal = () => {
-    let game = gameCtx.game;
-    let card = game.pullHistory[game.pullHistory.length - 1];
+    let updatedGame = gameCtx.game;
+    let card = updatedGame.pullHistory[updatedGame.pullHistory.length - 1];
+
     setSrcDiscardImg(card.front);
-    game.discards.push(card);
-    gameCtx.updateGame(game);
+    updatedGame.discards.push(card);
+
+    let nextPlayer = getNextPlayer();
+    updatedGame.currentPlayer = nextPlayer;
+
+    gameCtx.updateGame(updatedGame);
 
     setShowCard(false);
   }
@@ -62,7 +78,7 @@ const Board: React.FC = () => {
         <IonToolbar>
           <IonTitle><b>Night School</b></IonTitle>
           <IonButtons slot="end">
-            <IonButton onClick={() => setShowModal(true)}>
+            <IonButton onClick={() => setPauseModal(true)}>
               <IonIcon icon={settings} />
             </IonButton>
           </IonButtons>
@@ -74,7 +90,8 @@ const Board: React.FC = () => {
             <ResponsiveContent>
               <IonCard>
                 <IonCardHeader>
-                  <IonCardTitle>{appCtx.profiles[0].username ?? "Nom du joueur"}</IonCardTitle>
+                  <img id='current-player-picture' src={gameCtx.game.currentPlayer.picture} alt='Profile' />
+                  <IonCardTitle>{gameCtx.game.currentPlayer.username}</IonCardTitle>
                 </IonCardHeader>
               </IonCard>
             </ResponsiveContent>
@@ -116,35 +133,9 @@ const Board: React.FC = () => {
         </IonGrid>
       </IonContent>
 
-      <IonModal isOpen={showCard}>
-        <IonHeader>
-          <IonToolbar>
-            <IonTitle>Voici ta carte :</IonTitle>
-          </IonToolbar>
-        </IonHeader>
-        <IonContent>
-          <IonGrid className="ion-text-center">
-            <IonRow>
-              <ResponsiveContent>
-                <img src={srcCardImg} alt='Card front' />
-              </ResponsiveContent>
-            </IonRow>
-            <IonRow>
-              <IonCol>
-                <IonCard>
-                  <IonCardHeader>
-                    <IonCardTitle>Effet de la carte :</IonCardTitle>
-                    <IonCardContent>{gameCtx.game.cardPulled.rule}</IonCardContent>
-                  </IonCardHeader>
-                </IonCard>
-              </IonCol>
-            </IonRow>
-          </IonGrid>
-          <IonFooter className='ion-text-center'>
-            <IonButton onClick={() => dismissCardModal()} fill="outline">OK</IonButton>
-          </IonFooter>
-        </IonContent>
-      </IonModal>
+      <CardModal showModal={showCard} dismissCardModal={dismissCardModal} srcCardImg={srcCardImg} />
+
+      <PauseModal showModal={pauseModal} setShowModal={setPauseModal} />
 
       <IonAlert
         isOpen={showAlert}
@@ -153,40 +144,7 @@ const Board: React.FC = () => {
         header={'Deck vide'}
         message={"Il n'y a plus de carte dans ce paquet !"}
         buttons={['OK']}
-      />	
-
-      <IonModal isOpen={showModal}>
-        <IonHeader>
-          <IonToolbar>
-            <IonButtons slot="end">
-              <IonButton onClick={() => setShowModal(false)}>
-                <IonIcon icon={closeOutline} />
-              </IonButton>
-            </IonButtons>
-            <IonTitle>Jeu en pause</IonTitle>
-          </IonToolbar>
-        </IonHeader>
-        <IonContent>
-          <IonGrid className="ion-text-center">
-            <IonRow>
-              <IonCol>
-                <IonButton onClick={() => setShowModal(false)} fill="outline">Reprendre</IonButton>
-              </IonCol>
-            </IonRow>
-            <IonRow>
-              <IonCol>
-                <IonButton routerLink={ROUTE_OPTIONS} onClick={() => setShowModal(false)} fill="outline">Recommencer</IonButton>
-              </IonCol>
-            </IonRow>
-            <IonRow>
-              <IonCol>
-                <IonButton routerLink={ROUTE_HOME} onClick={() => setShowModal(false)} fill="outline">Quitter la partie</IonButton>
-              </IonCol>
-            </IonRow>
-          </IonGrid>
-        </IonContent>
-      </IonModal>
-
+      />
 		</IonPage>
 	)
 }
