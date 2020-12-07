@@ -48,6 +48,10 @@ const AppContextProvider: React.FC = (props) => {
         })
     }
 
+    const updateAgree = (value: boolean) => {
+        setAgreeDrinkWarning(value);
+    }
+
     const initContext = async () => {
         const profilesData = await Storage.get({ key: 'profiles' })
         const storedProfiles = profilesData.value ? JSON.parse(profilesData.value) : defaultProfile;
@@ -55,7 +59,7 @@ const AppContextProvider: React.FC = (props) => {
         setProfiles(storedProfiles)
     }
 
-    return <AppContext.Provider value={{ initContext, profiles, addProfile, deleteProfile, updateProfile, agreeDrinkWarning}}>
+    return <AppContext.Provider value={{ initContext, profiles, addProfile, deleteProfile, updateProfile, agreeDrinkWarning, updateAgree}}>
         {props.children}
     </AppContext.Provider>
 }
