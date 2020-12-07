@@ -1,13 +1,20 @@
 import { IonAlert, IonButton, IonCol, IonContent, IonFooter, IonGrid, IonImg, IonPage, IonRow } from '@ionic/react';
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import ResponsiveContent from '../components/ResponsiveContent';
+import AppContext from '../data/app-context';
 
 import './global.css'
 import './Home.css'
 
 const Home: React.FC = () => {
 
-  const [showAlert, setShowAlert] = useState(true);
+  const appCtx = useContext(AppContext);
+  const [showAlert, setShowAlert] = useState(!appCtx.agreeDrinkWarning);
+
+  const dismissDrinkWarning = () => {
+    appCtx.agreeDrinkWarning = true;
+    setShowAlert(false);
+  }
 
   return (
     <IonPage>
@@ -42,7 +49,7 @@ const Home: React.FC = () => {
 
       <IonAlert
         isOpen={showAlert}
-        onDidDismiss={() => setShowAlert(false)}
+        onDidDismiss={() => dismissDrinkWarning()}
         cssClass='my-custom-class'
         header={'Attention'}
         message={"L'abus d'alcool est dangereux pour la santé. En poursuivant vous confirmez être responsable des éventuelles conséquences que pourrait engendrer l'utilisation de NightSchool."}

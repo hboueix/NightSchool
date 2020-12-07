@@ -1,4 +1,4 @@
-import { IonBackButton, IonButton, IonButtons, IonContent, IonFab, IonFabButton, IonFooter, IonHeader, IonIcon, IonPage, IonTitle, IonToolbar } from '@ionic/react';
+import { IonBackButton, IonButtons, IonContent, IonFab, IonHeader, IonIcon, IonPage, IonTitle, IonToolbar } from '@ionic/react';
 import React from 'react';
 // import { MediaCapture } from '@ionic-native/media-capture';
 // import { Media, MediaObject} from '@ionic-native/media/ngx';

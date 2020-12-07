@@ -6,16 +6,20 @@ import { Plugins } from '@capacitor/core'
 const { Storage } = Plugins;
 
 const AppContextProvider: React.FC = (props) => {
-    const [profiles, setProfiles] = useState<Profile[]>([defaultProfile])
+    const [profiles, setProfiles] = useState<Profile[]>([defaultProfile]);
+    const [agreeDrinkWarning, setAgreeDrinkWarning] = useState<boolean>(false);
+    // const [gameoptions, setGameOptions] = useState<GameOptions>(defaultGameOptions)
     const didMountRef = useRef(false);
 
     useEffect(() => {
         if (didMountRef.current) {
-            Storage.set({ key: 'profiles', value: JSON.stringify(profiles) })
+            Storage.set({ key: 'profiles', value: JSON.stringify(profiles) });
+            Storage.set({ key: 'agreeDrinkWarning', value: JSON.stringify(agreeDrinkWarning) });
+            // Storage.set({ key : 'gameoptions', value: JSON.stringify(gameoptions)})
         } else {
             didMountRef.current = true;
         }
-    }, [profiles])
+    }, [profiles, agreeDrinkWarning])
 
 	const addProfile = (newprofile: Profile) => {
         setProfiles((prevState) => {
@@ -48,6 +52,9 @@ const AppContextProvider: React.FC = (props) => {
         })
     }
 
+    const updateAgree = (value: boolean) => {
+        setAgreeDrinkWarning(value);
+    }
 
     const initContext = async () => {
         const profilesData = await Storage.get({ key: 'profiles' })
@@ -56,7 +63,7 @@ const AppContextProvider: React.FC = (props) => {
         setProfiles(storedProfiles)
     }
 
-    return <AppContext.Provider value={{ initContext, profiles, addProfile, deleteProfile, updateProfile}}>
+    return <AppContext.Provider value={{ initContext, profiles, addProfile, deleteProfile, updateProfile, agreeDrinkWarning, updateAgree}}>
         {props.children}
     </AppContext.Provider>
 }

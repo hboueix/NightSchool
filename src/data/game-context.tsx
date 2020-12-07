@@ -80,7 +80,7 @@ export interface Game {
 	decks: typeof Deck[]
 	discards: Card[]
 	cardPulled: Card
-	pullHistory: Card[]
+	pullHistory: {id: number, card: Card}[]
 	currentPlayer: Profile
 }
 
