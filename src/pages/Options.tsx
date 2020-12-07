@@ -1,11 +1,12 @@
 import { IonBackButton, IonButton, IonButtons, IonCard, IonCardHeader, IonCardTitle, IonCol, IonContent, IonFab, IonFabButton, IonFooter, IonGrid, IonHeader, IonIcon, IonItem, IonLabel, IonList, IonPage, IonRow, IonTitle, IonToolbar } from '@ionic/react';
 import { addOutline,close } from 'ionicons/icons';
 import React, { useContext, useState } from 'react';
-import { parseConfigFileTextToJson } from 'typescript';
+import { Redirect } from 'react-router';
 import AddProfileModal from '../components/AddProfileModal';
 import EditProfileModal from '../components/EditProfileModal';
 import ResponsiveContent from '../components/ResponsiveContent';
 import AppContext from '../data/app-context';
+import GameContext from '../data/game-context';
 import { ROUTE_BOARD } from '../nav/Routes';
 
 import './global.css'
@@ -14,17 +15,23 @@ const Options: React.FC = () => {
 	// const [checked, setChecked] = useState(false);
 	// const [showAlert, setShowAlert] = useState(false);
 	const [showModal, setShowModal] = useState(false);
-	const [editModal, setEditModal] = useState(false); 
+  const [editModal, setEditModal] = useState(false); 
+  const [redirect, setRedirect] = useState(false);
 	const [idProfileToEdit, setIdProfileToEdit] = useState<number>(1);
 
 	const clickOnProfile = (elem: { id: number; username: string; picture: string; }) => {
 		console.log('elem', elem);
 		setIdProfileToEdit(elem.id);
 		setEditModal(true);
-	}
+  }
+  
+  const startGame = () => {
+    gameCtx.initGame();
+    setRedirect(true);
+  }
 
-
-	const appCtx = useContext(AppContext)
+	const appCtx = useContext(AppContext);
+  const gameCtx = useContext(GameContext);
 
 	return (
 	  <IonPage>
@@ -80,7 +87,7 @@ const Options: React.FC = () => {
                       (elem: { id: number; username: string; picture: string; }) => (
                         <IonItem key={elem.id}>
                           <IonCol onClick={() => clickOnProfile(elem)}>
-                            <img id="profile-picture" src={elem.picture} alt='Profil' />
+                            <img className="profile-picture" src={elem.picture} alt='Profil' />
                           </IonCol>
                           <IonCol>
                             <IonLabel className='ion-float-right' onClick={() => clickOnProfile(elem)}>{elem.username}</IonLabel>
@@ -131,8 +138,9 @@ const Options: React.FC = () => {
       </IonContent>
 
       <IonFooter className="ion-text-center">
-        <IonButton routerLink={ROUTE_BOARD} fill='outline'>
+        <IonButton onClick={() => startGame()} fill='outline'>
           Lancer la partie
+          {redirect && <Redirect to={ROUTE_BOARD} />}
         </IonButton>
       </IonFooter>
 	  </IonPage>

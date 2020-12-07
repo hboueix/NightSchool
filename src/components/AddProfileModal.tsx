@@ -16,7 +16,6 @@ import {
     IonFab,
     IonIcon,
     IonFabButton,
-    IonImg
 } from '@ionic/react';
 import React, { useContext, useRef, useState } from 'react';
 import AppContext, { Profile } from '../data/app-context';
@@ -30,9 +29,6 @@ const AddProfileModal: React.FC<{ showModal: boolean, setShowModal: (value: bool
     const usernameRef = useRef<HTMLIonInputElement>(null);
     const appCtx = useContext(AppContext);
     const [picture, setPicture] = useState<string>("assets/img/default-profile.png");
-
-    const resetModal = () => {
-    }
 
     const addHandler = async () => {
         let nextId = appCtx.profiles.length + 1
@@ -57,7 +53,7 @@ const AddProfileModal: React.FC<{ showModal: boolean, setShowModal: (value: bool
     }
 
     return (
-        <IonModal isOpen={props.showModal} onDidPresent={resetModal}>
+        <IonModal isOpen={props.showModal} >
             <IonHeader>
                 <IonToolbar>
                     <IonTitle>Nouveau joueur</IonTitle>
@@ -69,7 +65,7 @@ const AddProfileModal: React.FC<{ showModal: boolean, setShowModal: (value: bool
                         <ResponsiveContent>
                             <IonList className="ion-padding-bottom">
                                 <IonItem>
-                                    <img src={picture} alt='Profil' />
+                                    <img id='profile-picture' src={picture} alt='Profil' />
                                 </IonItem>
                                 <IonItem>
                                     <IonLabel position="floating">Nom du joueur</IonLabel>

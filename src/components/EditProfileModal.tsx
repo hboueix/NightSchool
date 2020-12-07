@@ -9,7 +9,6 @@ import {
     IonGrid,
     IonHeader,
     IonIcon,
-    IonImg,
     IonInput,
     IonItem,
     IonLabel,
@@ -20,7 +19,7 @@ import {
     IonToolbar
 } from '@ionic/react';
 import React, { useContext, useRef, useState } from 'react';
-import AppContext, { Profile } from '../data/app-context';
+import AppContext from '../data/app-context';
 import ResponsiveContent from './ResponsiveContent';
 import { CameraResultType, Plugins } from '@capacitor/core';
 import { camera } from 'ionicons/icons';
@@ -33,9 +32,6 @@ const EditProfileModal: React.FC<{showModal: boolean, id: number, setShowModal: 
     const usernameRef = useRef<HTMLIonInputElement>(null);
     const appCtx = useContext(AppContext);
     const [picture, setPicture] = useState<string>("assets/img/default-profile.png");
-
-    const resetModal = () => {
-    }
 
     const editHandler = async () => {
         let updatedProfile = appCtx.profiles[props.id-1] 
@@ -56,7 +52,7 @@ const EditProfileModal: React.FC<{showModal: boolean, id: number, setShowModal: 
     }
 
     return (
-        <IonModal isOpen={props.showModal} onDidPresent={resetModal}>
+        <IonModal isOpen={props.showModal}>
             <IonHeader>
                 <IonToolbar>
                     <IonTitle>Modifier username</IonTitle>
@@ -68,7 +64,7 @@ const EditProfileModal: React.FC<{showModal: boolean, id: number, setShowModal: 
                         <ResponsiveContent>
                             <IonList className="ion-padding-bottom">
                                 <IonItem>
-                                    <img src={picture} alt='Profil' />
+                                    <img id='profile-picture' src={picture} alt='Profil' />
                                 </IonItem>
                                 <IonItem>
                                     <IonLabel position="floating">Nom du joueur</IonLabel>
