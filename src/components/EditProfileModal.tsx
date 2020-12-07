@@ -38,12 +38,10 @@ const EditProfileModal: React.FC<{showModal: boolean, id: number, setShowModal: 
     }
 
     const editHandler = async () => {
-        let newProfile: Profile = {
-            id : props.id,
-            username: usernameRef.current?.value ? usernameRef.current?.value?.toString() : "Joueur" +props.id,
-            picture : picture
-        }
-        appCtx.updateProfile(newProfile)
+        let updatedProfile = appCtx.profiles[props.id-1] 
+        updatedProfile.username = usernameRef.current?.value ? usernameRef.current?.value?.toString() : "Joueur" +props.id
+        updatedProfile.picture = picture
+        appCtx.updateProfile(updatedProfile)
         props.setShowModal(false)
     }
 
