@@ -1,47 +1,42 @@
 # NightSchool
 
-## mise en situation
+NightSchool est une application mobile grace à laquelle on peut jouer à plusieurs en soirée. Elle reprend les règles du jeu "Le Barbu".
 
-Nous allons developper une application mobile qui regroupera plusieurs jeux différents, a jouer a plusiseurs en soirée. 
+## Fonctionnalités
 
-## Cahier des charges
+- Parametres: dark/light mode et langue FR/ENG
 
-acceuil (logo, boutton jouer et parametres)
+- Options de la partie : choix de nombre de joueurs, du pseudo de chacun et meme photo si besoin.
 
-options de la partie(nb de joeurs, noms, couleur,nb de cartes )
+- Partie : Chaque joueur, chacun son tour, va pouvoir tirer une carte parmis les 8 paquets différents. 
+	Une fois la carte tirée, la règle correspondante apparait, les joueurs la suivent, puis la carte va dans la défausse. 
+	Lorsqu'un joueur tire la derniere carte d'un paquet... 
 
-jeux (choix de la carte parmis 4?? affichage des cartes, regles, cartes/joueurs suivantes)
+- Pause : reprendre, recommencer ou quitter la partie. 
 
-fin de partie(revenir a l'acceuil, rejouer, ect)
+## Lancement de l'application 
 
-++
-users, regles personnalisables, autres jeux..
+Pour découvrir l'application sur le web il vous suffit de cloner le repository, installer les packages grace à :
+```npm install```
+puis lancer l'application avec :
+```ionic serve```
 
+Pour utiliser l'application sur votre smartphone : télécharger notre ![.apk](https://github.com/hboueix/NightSchool/raw/develop/app-debug.apk)
 
-Inputs :
-	Accueil:
-	- Bouton jouer
-	- Bouton params
-	Paramètres:
-	- Dark mode 
-	- Langage
-	- Menu ( quitter, recommencer, resume)
-	Options partie:
-	- Nbr joueurs
-	- foreach joueurs	: Nom joueurs (couleur)
-	Partie:
-	- Bouton pause (paramètres)
-	- Nom joueur  
-	- cartes mortes
-	- cartes "sur la bouteille"
-		- mini jeu grille digicode  fail -> cartes tombent
-	- 8 paquets de 6 à 9 cartes (52)
-		- Explication de la carte (cliquer pour passer au minijeu ou revenir à la partie)
-			Minijeu:
-			- 2 boutons, celui qui appuie le plus de fois sur son bouton
-			- "jeu du doigt" à 4 joueurs désignés d'office (ou pas ?)
-			- "niveau à bulle" chacun son tour, 3,2,1.. tel le plus droit possible
-			- accelerometre, pressure sense....
-			- telephone arabe avec le micro
-		- Nombre de cartes de restantes après la pioche
-		- Joueur suivant
+## Build de l'application (avec Android Studio)
+
+**Android :**
+Dans le dossier racine du repository :
+```
+ionic build
+npx cap add android
+npx cap sync android
+npx cap open android
+```
+Puis dans Android Studio, cliquer sur `Build --> Build Bundle /Apk`. Une fois terminé vous trouverez votre *.apk* dans le dossier `./android/app/build/outputs/apk/debug/`.
+
+## Fonctionnalités a venir
+
+- Mini jeu lorsqu'un joueur tire la dernière carte d'un paquet
+- Changement de la langue dans paramètres 
+- Minijeu "téléphone arabe" grace au micro (media-capture)

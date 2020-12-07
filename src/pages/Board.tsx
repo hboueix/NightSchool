@@ -1,4 +1,4 @@
-import { IonAlert, IonButton, IonButtons, IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonCol, IonContent, IonGrid, IonHeader, IonIcon, IonImg, IonPage, IonRow, IonTitle, IonToolbar } from '@ionic/react';
+import { IonAlert, IonButton, IonButtons, IonCard, IonCardContent, IonCardHeader, IonCardTitle, IonCol, IonContent, IonGrid, IonHeader, IonIcon, IonPage, IonRow, IonTitle, IonToolbar } from '@ionic/react';
 import React, { useContext, useState } from 'react';
 
 import { settings } from 'ionicons/icons';
@@ -18,7 +18,6 @@ const Deck = require('card-deck');
 
 const Board: React.FC = () => {
 
-  const [srcDiscardImg, setSrcDiscardImg] = useState('');
   const [srcCardImg, setSrcCardImg] = useState('');
   const [showCard, setShowCard] = useState(false);
   const [showAlert, setShowAlert] = useState(false);
@@ -55,12 +54,12 @@ const Board: React.FC = () => {
         updatedGame.cardPulled = card;
         updatedGame.pullHistory.push({'id': gameCtx.game.currentPlayer.id,'card': card});
         gameCtx.updateGame(updatedGame);
-			}
+        console.log('game', updatedGame)
+      }
 		}
   }
 
   const addCardOnDiscard = (card: Card, updatedGame: Game) => {
-    setSrcDiscardImg(card.front);
     updatedGame.discards.push(card);
     gameCtx.updateGame(updatedGame);
     endTurn();
@@ -71,9 +70,7 @@ const Board: React.FC = () => {
     let nextPlayer = getNextPlayer();
     updatedGame.currentPlayer = nextPlayer;
     gameCtx.updateGame(updatedGame);
-    console.log('discards: ', gameCtx.game.discards)
     if (gameCtx.game.discards.length === 0) {
-      setSrcDiscardImg("");
       setShowEndLoose(true);
     } else if (gameCtx.game.discards.length > 1) {
       setShowEndWin(true);
@@ -124,10 +121,10 @@ const Board: React.FC = () => {
           <IonRow>
             <IonDeck rotation='90' position='l' onClick={drawCard} />
             <IonCol>
-              {srcDiscardImg !== '' &&
-              <IonImg id='discard-deck' class='deck' 
+              {gameCtx.game.discards[gameCtx.game.discards.length - 1] &&
+              <img id='discard-deck' className='deck' 
                 onClick={() => console.log('click on discard deck')} 
-                src={srcDiscardImg}
+                src={gameCtx.game.discards[gameCtx.game.discards.length - 1].front} alt='Discard deck'
                 />
               }
             </IonCol>
