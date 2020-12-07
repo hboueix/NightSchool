@@ -68,7 +68,7 @@ const AddProfileModal: React.FC<{ showModal: boolean, setShowModal: (value: bool
                         <ResponsiveContent>
                             <IonList className="ion-padding-bottom">
                                 <IonItem>
-                                    <IonImg src={picture} />
+                                    <img src={picture} alt='Profil' />
                                 </IonItem>
                                 <IonItem>
                                     <IonLabel position="floating">Nom du joueur</IonLabel>

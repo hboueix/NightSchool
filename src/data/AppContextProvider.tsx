@@ -7,23 +7,16 @@ const { Storage } = Plugins;
 
 const AppContextProvider: React.FC = (props) => {
     const [profiles, setProfiles] = useState<Profile[]>([defaultProfile])
-    // const [gameoptions, setGameOptions] = useState<GameOptions>(defaultGameOptions)
     const didMountRef = useRef(false);
 
     useEffect(() => {
         if (didMountRef.current) {
             Storage.set({ key: 'profiles', value: JSON.stringify(profiles) })
-            // Storage.set({ key : 'gameoptions', value: JSON.stringify(gameoptions)})
         } else {
             didMountRef.current = true;
         }
     }, [profiles])
 
-    // const updateUsername = (newUsername: string) => {
-	// 	let updatedProfile = { ...appCtx.profile }
-	// 	updatedProfile.username = newUsername;
-	// 	appCtx.updateProfile(updatedProfile);
-	// }
 	const addProfile = (newprofile: Profile) => {
         setProfiles((prevState) => {
             let newList = [...prevState];
@@ -55,17 +48,11 @@ const AppContextProvider: React.FC = (props) => {
         })
     }
 
-    // const updateGameOptions = (updatedGameOptions: GameOptions) => {
-    //     setGameOptions(updatedGameOptions)
-    // }
 
     const initContext = async () => {
         const profilesData = await Storage.get({ key: 'profiles' })
-        // const gameoptionsData = await Storage.get({ key: 'gameoptions' })
         const storedProfiles = profilesData.value ? JSON.parse(profilesData.value) : defaultProfile;
-        // const storedGameOptions = gameoptionsData.value ? JSON.parse(gameoptionsData.value) : defaultGameOptions;
         didMountRef.current = false;
-        // setGameOptions(storedGameOptions)
         setProfiles(storedProfiles)
     }
 

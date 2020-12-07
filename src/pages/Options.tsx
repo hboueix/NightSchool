@@ -1,4 +1,4 @@
-import { IonBackButton, IonButton, IonButtons, IonCard, IonCardHeader, IonCardTitle, IonContent, IonFab, IonFabButton, IonFooter, IonGrid, IonHeader, IonIcon, IonItem, IonLabel, IonList, IonPage, IonRow, IonTitle, IonToolbar } from '@ionic/react';
+import { IonBackButton, IonButton, IonButtons, IonCard, IonCardHeader, IonCardTitle, IonCol, IonContent, IonFab, IonFabButton, IonFooter, IonGrid, IonHeader, IonIcon, IonItem, IonLabel, IonList, IonPage, IonRow, IonTitle, IonToolbar } from '@ionic/react';
 import { addOutline,close } from 'ionicons/icons';
 import React, { useContext, useState } from 'react';
 import { parseConfigFileTextToJson } from 'typescript';
@@ -79,15 +79,18 @@ const Options: React.FC = () => {
                     {appCtx.profiles.map(
                       (elem: { id: number; username: string; picture: string; }) => (
                         <IonItem key={elem.id}>
+                          <IonCol onClick={() => clickOnProfile(elem)}>
                             <img id="profile-picture" src={elem.picture} alt='Profil' />
-                            {/* <IonLabel>{elem.id}</IonLabel> */}
+                          </IonCol>
+                          <IonCol>
                             <IonLabel className='ion-float-right' onClick={() => clickOnProfile(elem)}>{elem.username}</IonLabel>
-                            {appCtx.profiles.length !== 1 && 
-                            <IonButtons slot="end">
-                              <IonButton onClick={() => appCtx.deleteProfile(elem.id)}>
-                                <IonIcon icon={close} />
-                              </IonButton>
-                            </IonButtons>}
+                          </IonCol>
+                          {appCtx.profiles.length !== 1 && 
+                          <IonButtons slot="end">
+                            <IonButton onClick={() => appCtx.deleteProfile(elem.id)}>
+                              <IonIcon icon={close} />
+                            </IonButton>
+                          </IonButtons>}
                         </IonItem>
                         )
                       )
